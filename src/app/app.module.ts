@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NgxsModule} from "@ngxs/store";
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -10,7 +12,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxsModule.forRoot([], {
+      developmentMode: !environment.production
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
