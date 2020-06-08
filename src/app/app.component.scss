@@ -1,0 +1,14 @@
+.title-wrapper{
+  background-color: var(--primary);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+
+  h1{
+    margin-bottom: 0;
+    margin-left: .5rem;
+    color: var(--white);
+  }
+}
