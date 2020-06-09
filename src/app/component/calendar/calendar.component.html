@@ -3,11 +3,11 @@
   <div class="row align-items-center justify-content-center">
     <ng-container *ngIf="currentMonthState$ |async as currentMonth">
       <div class="calendar-navigation">
-        <button mat-icon-button aria-label="previous month">
+        <button [disabled]="currentMonth.index == 0" (click)="prevMonth()" mat-icon-button aria-label="previous month">
           <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
         <span>{{currentMonth.name}}</span>
-        <button mat-icon-button aria-label="next month">
+        <button [disabled]="currentMonth.index == 11" (click)="nextMonth()" mat-icon-button aria-label="next month">
           <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
       </div>

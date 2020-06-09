@@ -4,15 +4,16 @@ import {Observable, Subject} from "rxjs";
 import {CalendarState, CalendarStateModel, MonthState} from "../../store/states/calendar.state";
 import {getMonth} from "date-fns/esm";
 import {takeUntil} from "rxjs/operators";
+import {NextMonth, PreviousMonth} from "../../store/actions/calendar.actions";
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit,OnDestroy {
+export class CalendarComponent implements OnInit, OnDestroy {
 
-  private readonly destroySubject : Subject<boolean>;
+  private readonly destroySubject: Subject<boolean>;
 
   private readonly currentMonth$: Observable<number>;
   public calendarState$: Observable<CalendarStateModel>;
@@ -34,13 +35,11 @@ export class CalendarComponent implements OnInit,OnDestroy {
       .pipe(
         takeUntil(this.destroySubject)
       )
-      .subscribe((val)=>{
+      .subscribe((val) => {
         this.prevMonthSlice$ = this._store.select(CalendarState.getPrevMonthSlice(val));
         this.currentMonthState$ = this._store.select(CalendarState.getMonthState(val));
         this.nextMonthSlice$ = this._store.select(CalendarState.getNextMonthSlice(val));
       });
-
-
 
 
   }
@@ -49,6 +48,14 @@ export class CalendarComponent implements OnInit,OnDestroy {
     this.destroySubject.next(true);
   }
 
+  //navigate to next month
+  public nextMonth() {
+    this._store.dispatch(new NextMonth());
+  }
 
+  //navigate tp previous month
+  public prevMonth() {
+    this._store.dispatch(new PreviousMonth());
+  }
 
 }

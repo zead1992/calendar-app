@@ -1,7 +1,8 @@
 //calendar state
 import {Utility} from "../../utilities/utility";
-import {createSelector, Selector, State} from "@ngxs/store";
+import {Action, createSelector, Selector, State, StateContext} from "@ngxs/store";
 import {getMonth} from "date-fns/esm";
+import {NextMonth, PreviousMonth} from "../actions/calendar.actions";
 
 export interface CalendarStateModel {
   calendar: {
@@ -76,7 +77,7 @@ export class CalendarState {
 
   //selected month
   @Selector([CalendarState])
-  static currentMonth(state : CalendarStateModel){
+  static currentMonth(state: CalendarStateModel) {
     return state.selectedMonth;
   }
 
@@ -122,14 +123,23 @@ export class CalendarState {
 
       nextMonthSlice = {
         ...nextMonthState,
-        day: nextMonthState.day.slice(0, 35 - currentMonthState.startDay - currentMonthState.day.length)
+        day: nextMonthState.day.slice(0, 42 - currentMonthState.startDay - currentMonthState.day.length)
       };
 
-      console.log(nextMonthSlice);
 
       return nextMonthSlice;
 
     });
+  }
+
+  @Action(NextMonth)
+  nextMonth({getState, patchState}: StateContext<CalendarStateModel>) {
+    patchState({selectedMonth: getState().selectedMonth + 1});
+  }
+
+  @Action(PreviousMonth)
+  previousMonth({getState, patchState}: StateContext<CalendarStateModel>) {
+    patchState({selectedMonth: getState().selectedMonth - 1});
   }
 
 }
