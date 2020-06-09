@@ -12,11 +12,13 @@ import {CalendarComponent} from './component/calendar/calendar.component';
 import {CalendarService} from "./services/calendar.service";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import { NewReminderFormComponent } from './component/new-reminder-form/new-reminder-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarComponent
+    CalendarComponent,
+    NewReminderFormComponent
   ],
   imports: [
     BrowserModule,
