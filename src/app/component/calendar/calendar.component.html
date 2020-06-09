@@ -1,4 +1,20 @@
 <div class="calendar">
+
+  <div class="row align-items-center justify-content-center">
+    <ng-container *ngIf="currentMonthState$ |async as currentMonth">
+      <div class="calendar-navigation">
+        <button mat-icon-button aria-label="previous month">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <span>{{currentMonth.name}}</span>
+        <button mat-icon-button aria-label="next month">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+
+  </div>
+
   <div class="week-days">
     <div class="title"><span>Sunday</span></div>
     <div class="title"><span>Monday</span></div>
@@ -11,6 +27,15 @@
   <div class="calendar-wrapper">
 
     <!--prev month-->
+    <ng-container *ngIf="prevMonthSlice$ | async as prevMonthSlice">
+      <ng-container *ngIf="prevMonthSlice.day.length > 0">
+        <ng-container *ngFor="let day of prevMonthSlice.day">
+          <div [ngClass]="{'weekend-card': day.isWeekend}" class="calendar-card">
+            <span class="date pl-2">{{day.date}}</span>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
     <!--/ prev month-->
 
     <!--current month-->
@@ -24,6 +49,15 @@
     <!--/ current month-->
 
     <!--next month-->
+    <ng-container *ngIf="nextMonthSlice$ | async as nextMonthSlice">
+      <ng-container *ngIf="nextMonthSlice.day.length > 0">
+        <ng-container *ngFor="let day of nextMonthSlice.day">
+          <div [ngClass]="{'weekend-card': day.isWeekend}" class="calendar-card">
+            <span class="date pl-2">{{day.date}}</span>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
     <!--/ next month-->
 
   </div>

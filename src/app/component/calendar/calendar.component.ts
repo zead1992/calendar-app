@@ -11,7 +11,7 @@ import {getMonth} from "date-fns/esm";
 })
 export class CalendarComponent implements OnInit {
 
-  private currentMonth: number;
+  private readonly currentMonth: number;
 
   public calendarState$: Observable<CalendarStateModel>;
 
@@ -23,7 +23,7 @@ export class CalendarComponent implements OnInit {
   constructor(
     private _store: Store
   ) {
-    this.currentMonth = getMonth(new Date(2020,4));
+    this.currentMonth = getMonth(new Date());
   }
 
   ngOnInit(): void {

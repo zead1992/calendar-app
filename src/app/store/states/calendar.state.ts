@@ -113,8 +113,10 @@ export class CalendarState {
 
       nextMonthSlice = {
         ...nextMonthState,
-        day: nextMonthState.day.slice(nextMonthState.day.length - currentMonthState.startDay, nextMonthState.day.length)
+        day: nextMonthState.day.slice(0, 35 - currentMonthState.startDay - currentMonthState.day.length)
       };
+
+      console.log(nextMonthSlice);
 
       return nextMonthSlice;
 

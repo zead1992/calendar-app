@@ -1,6 +1,19 @@
 .calendar {
   margin: 1rem 0;
 
+  .calendar-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+
+    span{
+      font-size: 1.2rem;
+      padding: 0 1rem;
+    }
+  }
+
   .week-days {
     display: grid;
     grid-gap: 0;
@@ -25,14 +38,15 @@
     grid-auto-rows: 100px;
 
     .calendar-card {
-      .date{
+      .date {
         color: var(--dark);
         font-weight: bold;
       }
+
       &.weekend-card {
         background-color: var(--light);
 
-        .date{
+        .date {
           color: var(--primary);
         }
       }

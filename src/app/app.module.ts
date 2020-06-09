@@ -10,6 +10,8 @@ import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {CalendarState} from "./store/states/calendar.state";
 import {CalendarComponent} from './component/calendar/calendar.component';
 import {CalendarService} from "./services/calendar.service";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import {CalendarService} from "./services/calendar.service";
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [CalendarService],
   bootstrap: [AppComponent]
