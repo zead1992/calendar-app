@@ -1,0 +1,43 @@
+.calendar {
+  margin: 1rem 0;
+
+  .week-days {
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+
+    background-color: var(--primary);
+
+    .title {
+      font-size: 1.2rem;
+      text-align: center;
+      color: var(--white);
+      padding: .5rem 0;
+    }
+  }
+
+  .calendar-wrapper {
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 100px);
+    grid-auto-rows: 100px;
+
+    .calendar-card {
+      .date{
+        color: var(--dark);
+        font-weight: bold;
+      }
+      &.weekend-card {
+        background-color: var(--light);
+
+        .date{
+          color: var(--primary);
+        }
+      }
+
+    }
+
+  }
+}

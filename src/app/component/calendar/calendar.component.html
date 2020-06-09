@@ -1,0 +1,30 @@
+<div class="calendar">
+  <div class="week-days">
+    <div class="title"><span>Sunday</span></div>
+    <div class="title"><span>Monday</span></div>
+    <div class="title"><span>Tuesday</span></div>
+    <div class="title"><span>Wednesday</span></div>
+    <div class="title"><span>Thursday</span></div>
+    <div class="title"><span>Friday</span></div>
+    <div class="title"><span>Saturday</span></div>
+  </div>
+  <div class="calendar-wrapper">
+
+    <!--prev month-->
+    <!--/ prev month-->
+
+    <!--current month-->
+    <ng-container *ngIf="currentMonthState$ | async as currentMonthState">
+      <ng-container *ngFor="let day of currentMonthState.day">
+        <div [ngClass]="{'weekend-card': day.isWeekend}" class="calendar-card">
+          <span class="date pl-2">{{day.date}}</span>
+        </div>
+      </ng-container>
+    </ng-container>
+    <!--/ current month-->
+
+    <!--next month-->
+    <!--/ next month-->
+
+  </div>
+</div>
