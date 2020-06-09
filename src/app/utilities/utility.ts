@@ -37,7 +37,7 @@ export class Utility {
   }
 
   static getMonthStartDay(index: number) {
-    const monthStartDate: Date = startOfMonth(new Date(getYear(new Date().getUTCFullYear()), index));
+    const monthStartDate: Date = startOfMonth(new Date(getYear(new Date()), index));
     const monthFirstDay: number = getDay(monthStartDate);
     return monthFirstDay;
   }
