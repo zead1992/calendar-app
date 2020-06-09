@@ -25,6 +25,7 @@
     "bootstrap": "^4.5.0",
     "date-fns": "^2.14.0",
     "lodash-es": "^4.17.15",
+    "ngx-material-timepicker": "^5.5.3",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
