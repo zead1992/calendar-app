@@ -12,7 +12,21 @@ import {CalendarComponent} from './component/calendar/calendar.component';
 import {CalendarService} from "./services/calendar.service";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import { NewReminderFormComponent } from './component/new-reminder-form/new-reminder-form.component';
+import {NewReminderFormComponent} from './component/new-reminder-form/new-reminder-form.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {
+  MAT_COLOR_FORMATS,
+  NGX_MAT_COLOR_FORMATS,
+  NgxMatColorPickerModule
+} from "@angular-material-components/color-picker";
+import {MatSelectModule} from "@angular/material/select";
+import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 
 @NgModule({
   declarations: [
@@ -23,6 +37,8 @@ import { NewReminderFormComponent } from './component/new-reminder-form/new-remi
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgxsModule.forRoot([CalendarState], {
       developmentMode: !environment.production
     }),
@@ -30,8 +46,20 @@ import { NewReminderFormComponent } from './component/new-reminder-form/new-remi
     NgxsLoggerPluginModule.forRoot(),
     MatIconModule,
     MatButtonModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxMatColorPickerModule,
+    MatSelectModule,
+    NgxMatSelectSearchModule
   ],
-  providers: [CalendarService],
+  providers: [CalendarService,
+    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
+  ],
+  entryComponents:[NewReminderFormComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

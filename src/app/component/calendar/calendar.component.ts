@@ -5,6 +5,8 @@ import {CalendarState, CalendarStateModel, MonthState} from "../../store/states/
 import {getMonth} from "date-fns/esm";
 import {takeUntil} from "rxjs/operators";
 import {NextMonth, PreviousMonth} from "../../store/actions/calendar.actions";
+import {MatDialog} from "@angular/material/dialog";
+import {NewReminderFormComponent} from "../new-reminder-form/new-reminder-form.component";
 
 @Component({
   selector: 'app-calendar',
@@ -23,7 +25,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private _store: Store
+    private _store: Store,
+    private _matDialog : MatDialog
   ) {
     this.destroySubject = new Subject<boolean>();
   }
@@ -56,6 +59,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
   //navigate tp previous month
   public prevMonth() {
     this._store.dispatch(new PreviousMonth());
+  }
+
+  //open reminder form dialog
+  public openReminderFormDialog(){
+    const dialog = this._matDialog.open(NewReminderFormComponent);
   }
 
 }
