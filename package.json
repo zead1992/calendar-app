@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/color-picker": "^2.0.2",
     "@angular/animations": "~9.1.9",
     "@angular/cdk": "^9.2.4",
     "@angular/common": "~9.1.9",
@@ -25,7 +26,6 @@
     "bootstrap": "^4.5.0",
     "date-fns": "^2.14.0",
     "lodash-es": "^4.17.15",
-    "ngx-material-timepicker": "^5.5.3",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
