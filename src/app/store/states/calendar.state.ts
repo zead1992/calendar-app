@@ -94,11 +94,28 @@ export class CalendarState {
 
       let prevMonthSlice: MonthState;
 
-      if (currentMonthIndex == 0) {
-        return null;
-      }
       const currentMonthState: MonthState = state.calendar[currentMonthIndex];
       const prevMonthState: MonthState = state.calendar[currentMonthIndex - 1];
+
+      if (currentMonthIndex == 0) {
+        prevMonthSlice = {
+          index:11,
+          name:Utility.monthStatic()["11"],
+          startDay:null,
+          day:[]
+        };
+
+        for(let i = 0 ; i< currentMonthState.startDay; i++){
+          prevMonthSlice.day.push({
+            date:null,
+            isWeekend:false,
+            reminders:[]
+          })
+        }
+
+        return prevMonthSlice;
+      }
+
 
       prevMonthSlice = {
         ...prevMonthState,
@@ -115,7 +132,7 @@ export class CalendarState {
 
       let nextMonthSlice: MonthState;
 
-      if (currentMonthIndex == 0) {
+      if (currentMonthIndex == 11) {
         return null;
       }
       const currentMonthState: MonthState = state.calendar[currentMonthIndex];
