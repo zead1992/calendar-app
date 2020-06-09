@@ -1,7 +1,7 @@
 //calendar state
 import {Utility} from "../../utilities/utility";
 import {createSelector, Selector, State} from "@ngxs/store";
-import {Observable} from "rxjs";
+import {getMonth} from "date-fns/esm";
 
 export interface CalendarStateModel {
   calendar: {
@@ -17,7 +17,8 @@ export interface CalendarStateModel {
     '9': MonthState,
     '10': MonthState,
     '11': MonthState,
-  }
+  },
+  selectedMonth: number;
 }
 
 export interface MonthState {
@@ -56,6 +57,7 @@ export const initialCalendarState: CalendarStateModel = {
     '10': Utility.initMonthState(10),
     '11': Utility.initMonthState(11),
   },
+  selectedMonth: getMonth(new Date())
 };
 
 
@@ -66,9 +68,16 @@ export const initialCalendarState: CalendarStateModel = {
 })
 export class CalendarState {
 
+  //calendar state
   @Selector([CalendarState])
   static calendarState(state: CalendarStateModel) {
     return state;
+  }
+
+  //selected month
+  @Selector([CalendarState])
+  static currentMonth(state : CalendarStateModel){
+    return state.selectedMonth;
   }
 
   //select month state

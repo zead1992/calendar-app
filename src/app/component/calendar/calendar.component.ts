@@ -1,20 +1,21 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngxs/store";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {CalendarState, CalendarStateModel, MonthState} from "../../store/states/calendar.state";
 import {getMonth} from "date-fns/esm";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit,OnDestroy {
 
-  private readonly currentMonth: number;
+  private readonly destroySubject : Subject<boolean>;
 
+  private readonly currentMonth$: Observable<number>;
   public calendarState$: Observable<CalendarStateModel>;
-
   public prevMonthSlice$: Observable<MonthState>;
   public currentMonthState$: Observable<MonthState>;
   public nextMonthSlice$: Observable<MonthState>;
@@ -23,17 +24,31 @@ export class CalendarComponent implements OnInit {
   constructor(
     private _store: Store
   ) {
-    this.currentMonth = getMonth(new Date());
+    this.destroySubject = new Subject<boolean>();
   }
 
   ngOnInit(): void {
     this.calendarState$ = this._store.select(CalendarState.calendarState);
 
-    this.prevMonthSlice$ = this._store.select(CalendarState.getPrevMonthSlice(this.currentMonth));
-    this.currentMonthState$ = this._store.select(CalendarState.getMonthState(this.currentMonth));
-    this.nextMonthSlice$ = this._store.select(CalendarState.getNextMonthSlice(this.currentMonth));
+    this._store.select(CalendarState.currentMonth)
+      .pipe(
+        takeUntil(this.destroySubject)
+      )
+      .subscribe((val)=>{
+        this.prevMonthSlice$ = this._store.select(CalendarState.getPrevMonthSlice(val));
+        this.currentMonthState$ = this._store.select(CalendarState.getMonthState(val));
+        this.nextMonthSlice$ = this._store.select(CalendarState.getNextMonthSlice(val));
+      });
+
+
 
 
   }
+
+  ngOnDestroy(): void {
+    this.destroySubject.next(true);
+  }
+
+
 
 }
