@@ -5,7 +5,7 @@ import {IOpenWeatherParams, IOpenWeatherResponse} from "../interfaces/weather.in
 @Injectable()
 export class WeatherService {
 
-  private APPID: string = '7914bd2705a08c2fac9711c1f709852b';
+  private APPID: string = '051c92065d46fbfa8918baffe5bc8676';
 
   constructor(
     private _http: HttpClient
@@ -14,7 +14,7 @@ export class WeatherService {
   }
 
   public getWeather(_params: IOpenWeatherParams) {
-    return this._http.get<IOpenWeatherResponse>('https://cors-anywhere.herokuapp.com/https://history.openweathermap.org/data/2.5/aggregated/day', {
+    return this._http.get<IOpenWeatherResponse>('https://history.openweathermap.org/data/2.5/aggregated/day', {
       params: <any>{
         APPID: this.APPID,
         ..._params

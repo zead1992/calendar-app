@@ -8,7 +8,7 @@ export interface IFormVal<ValType> {
 
 export type IReminderNewForm = {
   text: IFormVal<string> | string;
-  date:IFormVal<Date> | Date;
+  date:IFormVal<string> | string;
   city:IFormVal<number> | number;
   color:IFormVal<Color> | Color;
 }
