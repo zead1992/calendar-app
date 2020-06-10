@@ -92,6 +92,7 @@ export class NewReminderFormComponent implements OnInit, OnDestroy {
       )
       .subscribe((res: IReminderNewForm) => {
         if (res.city && res.date) {
+          this.weatherStatus = MOCK_WEATHER_DATA;
           const parseDate = parseISO(res.date);
           const month = getMonth(parseDate);
           const day = getDate(parseDate);
@@ -104,6 +105,9 @@ export class NewReminderFormComponent implements OnInit, OnDestroy {
             units: 'metric'
           })
             .subscribe(res => this.weatherStatus = res)
+        }else{
+          //clear weather status
+          this.weatherStatus = null;
         }
       })
   }

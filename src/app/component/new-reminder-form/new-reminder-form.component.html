@@ -99,10 +99,11 @@
 
     <!--view city weather-->
     <ng-container *ngIf="weatherStatus">
-    <div class="col-12">
-        <h3>Weather Status</h3>
+    <div class="col-12 weather-wrapper">
+        <span>Weather Status</span>
         <mat-list role="list">
-          <mat-list-item role="listitem">Tempreture : {{weatherStatus.result.temp.average_min}} - {{weatherStatus.result.temp.average_max}}</mat-list-item>
+          <mat-list-item role="listitem"><span>Tempreture: {{weatherStatus.result.temp.average_min}} - {{weatherStatus.result.temp.average_max}}</span> </mat-list-item>
+          <mat-list-item role="listitem"><span>Humidity: {{weatherStatus.result.humidity.min}} - {{weatherStatus.result.humidity.max}}</span></mat-list-item>
         </mat-list>
     </div>
     </ng-container>
