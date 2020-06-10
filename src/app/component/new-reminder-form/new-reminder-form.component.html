@@ -8,7 +8,21 @@
       <mat-form-field appearance="outline">
         <mat-label>Text</mat-label>
         <input [formControlName]="newForm.formKey('text')" matInput>
+        <ng-container *ngIf="newForm.form.get(newForm.formKey('text')).errors as errors">
+          <ng-container *ngIf="newForm.form.get(newForm.formKey('text')).touched">
+
+            <mat-error *ngIf="errors.required">
+              field is required
+            </mat-error>
+
+            <mat-error *ngIf="errors.maxlength">
+              max chars is 30
+            </mat-error>
+
+          </ng-container>
+        </ng-container>
       </mat-form-field>
+
     </div>
 
 
@@ -17,6 +31,15 @@
       <mat-form-field appearance="outline">
         <mat-label>Reminder Date</mat-label>
         <input [formControlName]="newForm.formKey('date')" matInput type="datetime-local">
+        <ng-container *ngIf="newForm.form.get(newForm.formKey('date')).errors as errors">
+          <ng-container *ngIf="newForm.form.get(newForm.formKey('date')).touched">
+
+            <mat-error *ngIf="errors.required">
+              field is required
+            </mat-error>
+
+          </ng-container>
+        </ng-container>
       </mat-form-field>
     </div>
 
@@ -28,6 +51,15 @@
         <input [formControlName]="newForm.formKey('color')" matInput [ngxMatColorPicker]="picker">
         <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
         <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+        <ng-container *ngIf="newForm.form.get(newForm.formKey('color')).errors as errors">
+          <ng-container *ngIf="newForm.form.get(newForm.formKey('color')).touched">
+
+            <mat-error *ngIf="errors.required">
+              field is required
+            </mat-error>
+
+          </ng-container>
+        </ng-container>
       </mat-form-field>
     </div>
 
@@ -52,6 +84,15 @@
             </ng-container>
           </ng-container>
         </mat-select>
+        <ng-container *ngIf="newForm.form.get(newForm.formKey('city')).errors as errors">
+          <ng-container *ngIf="newForm.form.get(newForm.formKey('city')).touched">
+
+            <mat-error *ngIf="errors.required">
+              field is required
+            </mat-error>
+
+          </ng-container>
+        </ng-container>
       </mat-form-field>
     </div>
 

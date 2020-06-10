@@ -33,7 +33,7 @@ export class NewReminderFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.newFormControls = {
-      text: {val: null, validators: [Validators.required]},
+      text: {val: null, validators: [Validators.required,Validators.maxLength(30)]},
       date: {val: null, validators: [Validators.required]},
       city: {val: null, validators: [Validators.required]},
       color: {val: null, validators: [Validators.required]}
@@ -49,7 +49,9 @@ export class NewReminderFormComponent implements OnInit, OnDestroy {
     this.cityListBeh = new BehaviorSubject<ICity[]>(CITY_LIST);
     this.trackCitySearch();
 
-    this.newForm.form.valueChanges.subscribe(res => console.log(res));
+    this.newForm.form.valueChanges.subscribe(()=>{
+      console.log(this.newForm.form);
+    });
 
   }
 
