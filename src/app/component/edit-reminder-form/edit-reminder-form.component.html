@@ -1,0 +1,121 @@
+<ng-container *ngIf="reminder$ | async as reminder">
+  <h1 mat-dialog-title>New Reminder</h1>
+  <div mat-dialog-content>
+    <div [formGroup]="editForm.form" class="row align-items-center justify-content-start">
+
+
+      <!--reminder text-->
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Text</mat-label>
+          <input [formControlName]="editForm.formKey('text')" matInput>
+          <ng-container *ngIf="editForm.form.get(editForm.formKey('text')).errors as errors">
+            <ng-container *ngIf="editForm.form.get(editForm.formKey('text')).touched">
+
+              <mat-error *ngIf="errors.required">
+                field is required
+              </mat-error>
+
+              <mat-error *ngIf="errors.maxlength">
+                max chars is 30
+              </mat-error>
+
+            </ng-container>
+          </ng-container>
+        </mat-form-field>
+
+      </div>
+
+
+      <!--reminder date-->
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Reminder Date</mat-label>
+          <input [formControlName]="editForm.formKey('date')" matInput type="datetime-local">
+          <ng-container *ngIf="editForm.form.get(editForm.formKey('date')).errors as errors">
+            <ng-container *ngIf="editForm.form.get(editForm.formKey('date')).touched">
+
+              <mat-error *ngIf="errors.required">
+                field is required
+              </mat-error>
+
+            </ng-container>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+
+      <!--reminder color-->
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Reminder Color</mat-label>
+          <input [formControlName]="editForm.formKey('color')" matInput [ngxMatColorPicker]="picker">
+          <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+          <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+          <ng-container *ngIf="editForm.form.get(editForm.formKey('color')).errors as errors">
+            <ng-container *ngIf="editForm.form.get(editForm.formKey('color')).touched">
+
+              <mat-error *ngIf="errors.required">
+                field is required
+              </mat-error>
+
+            </ng-container>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+      <!--reminder city-->
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Reminder City</mat-label>
+          <mat-select [formControlName]="editForm.formKey('city')">
+            <mat-option>
+              <ngx-mat-select-search
+                [formControl]="citySearchControl"
+                placeholderLabel="search"
+                noEntriesFoundLabel="no result found..."
+              ></ngx-mat-select-search>
+            </mat-option>
+
+            <ng-container *ngIf="cityListBeh |async as cityList">
+              <ng-container *ngFor="let city of cityList">
+                <mat-option [value]="city.id">
+                  {{city.name}}
+                </mat-option>
+              </ng-container>
+            </ng-container>
+          </mat-select>
+          <ng-container *ngIf="editForm.form.get(editForm.formKey('city')).errors as errors">
+            <ng-container *ngIf="editForm.form.get(editForm.formKey('city')).touched">
+
+              <mat-error *ngIf="errors.required">
+                field is required
+              </mat-error>
+
+            </ng-container>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+
+      <!--view city weather-->
+      <ng-container *ngIf="weatherStatus">
+        <div class="col-12 weather-wrapper">
+          <span>Weather Status</span>
+          <mat-list role="list">
+            <mat-list-item role="listitem"><span>Tempreture: {{weatherStatus.result.temp.average_min}}
+              - {{weatherStatus.result.temp.average_max}}</span></mat-list-item>
+            <mat-list-item role="listitem"><span>Humidity: {{weatherStatus.result.humidity.min}}
+              - {{weatherStatus.result.humidity.max}}</span></mat-list-item>
+          </mat-list>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button (click)="editReminder()" [disabled]="editForm.form.invalid" color="accent" mat-raised-button>Update
+      Reminder
+    </button>
+  </div>
+</ng-container>

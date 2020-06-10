@@ -5,6 +5,9 @@ import {CalendarState, DayState} from "../../store/states/calendar.state";
 import {IReminderNew} from "../../interfaces/reminder.form";
 import orderBy from "lodash-es/orderBy";
 import {CITY_LIST} from "../../static/city.list";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {EditReminderFormComponent} from "../edit-reminder-form/edit-reminder-form.component";
+import {SetSelectedReminder} from "../../store/actions/calendar.actions";
 
 @Component({
   selector: 'app-reminders-dialog',
@@ -18,7 +21,9 @@ export class RemindersDialogComponent implements OnInit {
   public dayState$ : Observable<DayState>;
 
   constructor(
-    private _store : Store
+    private _store : Store,
+    private _matDialogRef : MatDialogRef<RemindersDialogComponent>,
+    private _matDialog : MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +42,12 @@ export class RemindersDialogComponent implements OnInit {
 
     return city.name
 
+  }
+
+  public openEditDialog(reminder : IReminderNew){
+    this._matDialogRef.close();
+    this._store.dispatch(new SetSelectedReminder(reminder));
+    this._matDialog.open(EditReminderFormComponent);
   }
 
 }

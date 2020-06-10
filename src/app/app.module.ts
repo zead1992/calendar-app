@@ -36,13 +36,15 @@ import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { RemindersDialogComponent } from './component/reminders-dialog/reminders-dialog.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { EditReminderFormComponent } from './component/edit-reminder-form/edit-reminder-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalendarComponent,
     NewReminderFormComponent,
-    RemindersDialogComponent
+    RemindersDialogComponent,
+    EditReminderFormComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +82,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     BaseUiService,
     {provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS}
   ],
-  entryComponents: [NewReminderFormComponent,RemindersDialogComponent],
+  entryComponents: [NewReminderFormComponent,RemindersDialogComponent,EditReminderFormComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

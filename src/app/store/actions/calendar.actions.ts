@@ -1,16 +1,17 @@
-import {IReminderNew, IReminderNewForm} from "../../interfaces/reminder.form";
+import {IReminderNew} from "../../interfaces/reminder.form";
 import {DayState} from "../states/calendar.state";
 
 export class AddReminder {
   static readonly type = '[Reminder API] add new reminder';
 
-  constructor(public payload :IReminderNew) {
+  constructor(public payload: IReminderNew) {
   }
 }
 
 //on new reminder added
 export class OnNewReminderAdded {
-  static readonly type ='[Reminder Added] on success';
+  static readonly type = '[Reminder Added] on success';
+
   constructor() {
   }
 }
@@ -18,6 +19,13 @@ export class OnNewReminderAdded {
 
 export class EditReminder {
   static readonly type = '[Reminder API] edit reminder';
+
+  constructor(public payload: IReminderNew) {
+  }
+}
+
+export class OnEditReminder {
+  static readonly type = '[Reminder Added] on success';
 
   constructor() {
   }
@@ -55,7 +63,15 @@ export class PreviousMonth {
 
 export class SetSelectedDayState {
   static readonly type = '[Calendar State] set day state';
-  constructor(public payload : DayState) {
+
+  constructor(public payload: DayState) {
+  }
+}
+
+export class SetSelectedReminder {
+  static readonly type = '[Calendar State] set reminder';
+
+  constructor(public payload: IReminderNew) {
   }
 }
 

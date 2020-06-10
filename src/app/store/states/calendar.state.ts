@@ -3,16 +3,17 @@ import {Utility} from "../../utilities/utility";
 import {Action, createSelector, Selector, State, StateContext} from "@ngxs/store";
 import {getMonth, getDate} from "date-fns/esm";
 import {
-  AddReminder,
-  NextMonth,
+  AddReminder, EditReminder,
+  NextMonth, OnEditReminder,
   OnNewReminderAdded,
   PreviousMonth,
-  SetSelectedDayState
+  SetSelectedDayState, SetSelectedReminder
 } from "../actions/calendar.actions";
 import {Color} from "@angular-material-components/color-picker";
 import {parseISO} from "date-fns/esm"
 import {BaseUiService} from "../../services/base-ui.service";
 import {Injectable} from "@angular/core";
+import {IColor, IReminderNew} from "../../interfaces/reminder.form";
 
 export interface CalendarStateModel {
   calendar: {
@@ -30,7 +31,8 @@ export interface CalendarStateModel {
     '11': MonthState,
   },
   selectedMonth: number;
-  selectedDayState:DayState;
+  selectedDayState: DayState;
+  selectedReminder: IReminderNew
 }
 
 export interface MonthState {
@@ -43,13 +45,13 @@ export interface MonthState {
 export interface DayState {
   date: number;
   isWeekend: boolean;
-  fullDate:Date;
+  fullDate: Date;
   reminders: {
-    id:string;
+    id: string;
     text: string;
     date: Date;
     city: number;
-    color: Color;
+    color: IColor;
   }[];
 }
 
@@ -71,7 +73,8 @@ export const initialCalendarState: CalendarStateModel = {
     '11': Utility.initMonthState(11),
   },
   selectedMonth: getMonth(new Date()),
-  selectedDayState:null,
+  selectedDayState: null,
+  selectedReminder: null
 };
 
 
@@ -84,7 +87,7 @@ export const initialCalendarState: CalendarStateModel = {
 export class CalendarState {
 
   constructor(
-    private _baseUiService : BaseUiService
+    private _baseUiService: BaseUiService
   ) {
   }
 
@@ -129,7 +132,7 @@ export class CalendarState {
             date: null,
             isWeekend: false,
             reminders: [],
-            fullDate:null
+            fullDate: null
           })
         }
 
@@ -175,6 +178,12 @@ export class CalendarState {
     return state.selectedDayState;
   }
 
+  //selected reminder
+  @Selector([CalendarState])
+  static selectedReminder(state : CalendarStateModel){
+    return state.selectedReminder;
+  }
+
   @Action(NextMonth)
   nextMonth({getState, patchState}: StateContext<CalendarStateModel>) {
     patchState({selectedMonth: getState().selectedMonth + 1});
@@ -186,7 +195,7 @@ export class CalendarState {
   }
 
   @Action(AddReminder)
-  addReminder({getState, patchState,setState,dispatch}: StateContext<CalendarStateModel>, {payload}: AddReminder) {
+  addReminder({getState, patchState, setState, dispatch}: StateContext<CalendarStateModel>, {payload}: AddReminder) {
     const parseDate = parseISO(payload.date);
     const reminderMonth = getMonth(parseDate);
     const reminderDate = getDate(parseDate);
@@ -202,15 +211,47 @@ export class CalendarState {
 
   }
 
+  //edit reminder
+  @Action(EditReminder)
+  editReminder({getState, patchState, setState, dispatch}: StateContext<CalendarStateModel>, {payload}: EditReminder) {
+    const parseDate = parseISO(payload.date);
+    const reminderMonth = getMonth(parseDate);
+    const reminderDate = getDate(parseDate);
+    const monthState: MonthState = getState().calendar[reminderMonth];
+    const reminder = monthState.day[reminderDate - 1].reminders.find(val=>val.id == payload.id);
+    const reminderIndex = monthState.day[reminderDate - 1].reminders.indexOf(reminder);
+    monthState.day[reminderDate - 1].reminders[reminderIndex] = {...payload};
+    patchState({
+      calendar: {
+        ...getState().calendar,
+        [String(reminderMonth)]: monthState
+      }
+    });
+    dispatch(new OnEditReminder());
+
+  }
+
   @Action(OnNewReminderAdded)
-  onNewReminderAdded(){
-    this._baseUiService.showSnackBar({msg:'new reminder Added'});
+  onNewReminderAdded() {
+    this._baseUiService.showSnackBar({msg: 'new reminder Added'});
+  }
+
+  @Action(OnEditReminder)
+  onEditReminder() {
+    this._baseUiService.showSnackBar({msg: 'reminder data updated'});
   }
 
   @Action(SetSelectedDayState)
-  setSelectedDayState({patchState}: StateContext<CalendarStateModel>,{payload}:SetSelectedDayState){
+  setSelectedDayState({patchState}: StateContext<CalendarStateModel>, {payload}: SetSelectedDayState) {
     patchState({
-      selectedDayState:payload
+      selectedDayState: payload
+    });
+  }
+
+  @Action(SetSelectedReminder)
+  setSelectedReminder({patchState}: StateContext<CalendarStateModel>, {payload}: SetSelectedReminder) {
+    patchState({
+      selectedReminder: payload
     });
   }
 
