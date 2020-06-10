@@ -27,6 +27,8 @@ import {
 } from "@angular-material-components/color-picker";
 import {MatSelectModule} from "@angular/material/select";
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import {WeatherService} from "./services/weather.service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     NgxsModule.forRoot([CalendarState], {
@@ -56,7 +59,9 @@ import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
     MatSelectModule,
     NgxMatSelectSearchModule
   ],
-  providers: [CalendarService,
+  providers: [
+    CalendarService,
+    WeatherService,
     { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
   ],
   entryComponents:[NewReminderFormComponent],
