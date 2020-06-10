@@ -7,6 +7,8 @@ import {takeUntil} from "rxjs/operators";
 import {NextMonth, PreviousMonth} from "../../store/actions/calendar.actions";
 import {MatDialog} from "@angular/material/dialog";
 import {NewReminderFormComponent} from "../new-reminder-form/new-reminder-form.component";
+import orderBy from "lodash-es/orderBy";
+import {IReminderNew} from "../../interfaces/reminder.form";
 
 @Component({
   selector: 'app-calendar',
@@ -64,6 +66,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
   //open reminder form dialog
   public openReminderFormDialog(){
     const dialog = this._matDialog.open(NewReminderFormComponent);
+  }
+
+  public orderReminderByDate(reminders)  : IReminderNew[]{
+    const ordered = orderBy(reminders,['date']);
+    return ordered;
   }
 
 }

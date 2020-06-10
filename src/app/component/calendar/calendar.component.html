@@ -34,7 +34,8 @@
     <ng-container *ngIf="prevMonthSlice$ | async as prevMonthSlice">
       <ng-container *ngIf="prevMonthSlice.day.length > 0">
         <ng-container *ngFor="let day of prevMonthSlice.day">
-          <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}" class="calendar-card prev-card">
+          <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}"
+               class="calendar-card prev-card">
             <div class="card-wrapper">
               <span class="date">{{day.date}}</span>
               <span *ngIf="day.reminders.length > 0" class="reminder-count">{{day.reminders.length}}</span>
@@ -51,7 +52,22 @@
         <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}" class="calendar-card">
           <div class="card-wrapper">
             <span class="date">{{day.date}}</span>
-            <span *ngIf="day.reminders.length > 0" class="reminder-count">{{day.reminders.length}}</span>
+            <span matTooltip="Reminder" *ngIf="day.reminders.length > 0" class="reminder-count">{{day.reminders.length}}</span>
+          </div>
+          <div class="reminders-wrapper">
+            <ng-container *ngIf="day.reminders.length > 0;">
+              <ng-container *ngFor="let reminder of orderReminderByDate(day.reminders);index as i">
+                <ng-container *ngIf="i < 3;">
+                  <div class="reminder-item">
+                    <div class="wrapper"
+                         [ngStyle]="{'border': '1px solid '+'#'+reminder.color.hex}"
+                         [matTooltip]="reminder.date | date:'HH:mm'">
+                      <span>{{reminder.text}}</span>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
       </ng-container>
@@ -62,7 +78,8 @@
     <ng-container *ngIf="nextMonthSlice$ | async as nextMonthSlice">
       <ng-container *ngIf="nextMonthSlice.day.length > 0">
         <ng-container *ngFor="let day of nextMonthSlice.day">
-          <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}" class="calendar-card next-card">
+          <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}"
+               class="calendar-card next-card">
             <div class="card-wrapper">
               <span class="date">{{day.date}}</span>
               <span *ngIf="day.reminders.length > 0" class="reminder-count">{{day.reminders.length}}</span>

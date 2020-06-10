@@ -33,6 +33,7 @@ import {MatListModule} from "@angular/material/list";
 import {BaseUiService} from "./services/base-ui.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
     MatSelectModule,
     NgxMatSelectSearchModule,
     MatListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [
     CalendarService,
