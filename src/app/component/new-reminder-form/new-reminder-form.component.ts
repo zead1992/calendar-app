@@ -128,7 +128,6 @@ export class NewReminderFormComponent implements OnInit, OnDestroy {
         takeUntil(this.destroySubject)
       )
       .subscribe(()=>{
-        this._store.dispatch(new OnNewReminderAdded());
         this._matDialogRef.close();
       });
   }

@@ -169,7 +169,7 @@ export class CalendarState {
   }
 
   @Action(AddReminder)
-  addReminder({getState, patchState,setState}: StateContext<CalendarStateModel>, {payload}: AddReminder) {
+  addReminder({getState, patchState,setState,dispatch}: StateContext<CalendarStateModel>, {payload}: AddReminder) {
     const parseDate = parseISO(payload.date);
     const reminderMonth = getMonth(parseDate);
     const reminderDate = getDate(parseDate);
@@ -181,6 +181,7 @@ export class CalendarState {
         [String(reminderMonth)]: monthState
       }
     });
+    dispatch(new OnNewReminderAdded());
 
   }
 
