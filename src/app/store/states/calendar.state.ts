@@ -2,7 +2,8 @@
 import {Utility} from "../../utilities/utility";
 import {Action, createSelector, Selector, State, StateContext} from "@ngxs/store";
 import {getMonth} from "date-fns/esm";
-import {NextMonth, PreviousMonth} from "../actions/calendar.actions";
+import {AddReminder, NextMonth, PreviousMonth} from "../actions/calendar.actions";
+import {Color} from "@angular-material-components/color-picker";
 
 export interface CalendarStateModel {
   calendar: {
@@ -35,9 +36,8 @@ export interface DayState {
   reminders: {
     text: string;
     date: Date;
-    city: string;
-    color: string;
-    weather: string;
+    city: number;
+    color: Color;
   }[];
 }
 
@@ -157,6 +157,11 @@ export class CalendarState {
   @Action(PreviousMonth)
   previousMonth({getState, patchState}: StateContext<CalendarStateModel>) {
     patchState({selectedMonth: getState().selectedMonth - 1});
+  }
+
+  @Action(AddReminder)
+  addReminder({getState,patchState}:StateContext<CalendarStateModel>){
+
   }
 
 }
