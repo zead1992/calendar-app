@@ -15,6 +15,7 @@ import {AddReminder, OnNewReminderAdded} from "../../store/actions/calendar.acti
 import {Color} from "@angular-material-components/color-picker";
 import {MatDialogRef} from "@angular/material/dialog";
 import {BaseUiService} from "../../services/base-ui.service";
+import {Guid} from "guid-typescript";
 
 @Component({
   selector: 'app-new-reminder-form',
@@ -123,7 +124,7 @@ export class NewReminderFormComponent implements OnInit, OnDestroy {
   //add reminder
   public addReminder() {
     const formValues : IReminderNew = this.newForm.form.getRawValue();
-    this._store.dispatch(new AddReminder({...formValues}))
+    this._store.dispatch(new AddReminder({...formValues,id:Guid.create().toString()}))
       .pipe(
         takeUntil(this.destroySubject)
       )

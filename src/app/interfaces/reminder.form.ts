@@ -14,6 +14,7 @@ export type IReminderNewForm = {
 }
 
 export type IReminderNew = {
+  id:string;
   text: string;
   date: Date;
   city: number;

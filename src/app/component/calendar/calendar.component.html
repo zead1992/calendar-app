@@ -34,8 +34,11 @@
     <ng-container *ngIf="prevMonthSlice$ | async as prevMonthSlice">
       <ng-container *ngIf="prevMonthSlice.day.length > 0">
         <ng-container *ngFor="let day of prevMonthSlice.day">
-          <div [ngClass]="{'weekend-card': day.isWeekend}" class="calendar-card">
-            <span class="date pl-2">{{day.date}}</span>
+          <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}" class="calendar-card prev-card">
+            <div class="card-wrapper">
+              <span class="date">{{day.date}}</span>
+              <span *ngIf="day.reminders.length > 0" class="reminder-count">{{day.reminders.length}}</span>
+            </div>
           </div>
         </ng-container>
       </ng-container>
@@ -45,8 +48,11 @@
     <!--current month-->
     <ng-container *ngIf="currentMonthState$ | async as currentMonthState">
       <ng-container *ngFor="let day of currentMonthState.day">
-        <div [ngClass]="{'weekend-card': day.isWeekend}" class="calendar-card">
-          <span class="date pl-2">{{day.date}}</span>
+        <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}" class="calendar-card">
+          <div class="card-wrapper">
+            <span class="date">{{day.date}}</span>
+            <span *ngIf="day.reminders.length > 0" class="reminder-count">{{day.reminders.length}}</span>
+          </div>
         </div>
       </ng-container>
     </ng-container>
@@ -56,8 +62,11 @@
     <ng-container *ngIf="nextMonthSlice$ | async as nextMonthSlice">
       <ng-container *ngIf="nextMonthSlice.day.length > 0">
         <ng-container *ngFor="let day of nextMonthSlice.day">
-          <div [ngClass]="{'weekend-card': day.isWeekend}" class="calendar-card">
-            <span class="date pl-2">{{day.date}}</span>
+          <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}" class="calendar-card next-card">
+            <div class="card-wrapper">
+              <span class="date">{{day.date}}</span>
+              <span *ngIf="day.reminders.length > 0" class="reminder-count">{{day.reminders.length}}</span>
+            </div>
           </div>
         </ng-container>
       </ng-container>

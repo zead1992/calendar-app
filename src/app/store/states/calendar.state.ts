@@ -37,6 +37,7 @@ export interface DayState {
   date: number;
   isWeekend: boolean;
   reminders: {
+    id:string;
     text: string;
     date: Date;
     city: number;

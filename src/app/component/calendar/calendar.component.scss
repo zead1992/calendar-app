@@ -38,9 +38,35 @@
     grid-auto-rows: 100px;
 
     .calendar-card {
+
+      transition: .2s ease-in-out;
+
+      border: 1px solid #d4d4d4;
+
+      .card-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
       .date {
         color: var(--dark);
         font-weight: bold;
+        font-size: 1.5rem;
+
+        margin-left: 5px;
+        margin-top: 5px;
+      }
+
+      .reminder-count{
+        margin-right: 5px;
+        margin-top: 5px;
+        padding: 1px;
+
+        color: var(--accent);
+        border: .5px solid var(--accent);
+        border-radius: 3px;
       }
 
       &.weekend-card {
@@ -48,6 +74,22 @@
 
         .date {
           color: var(--primary);
+        }
+      }
+
+      &.prev-card{
+        opacity: .3;
+      }
+
+      &.next-card{
+        opacity: .3;
+      }
+
+      &.has-reminder{
+        cursor: pointer;
+        &:hover{
+          box-shadow: 0 0 5px 0px #0000007a;
+
         }
       }
 
