@@ -29,6 +29,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import {WeatherService} from "./services/weather.service";
 import {HttpClientModule} from "@angular/common/http";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {HttpClientModule} from "@angular/common/http";
     MatNativeDateModule,
     NgxMatColorPickerModule,
     MatSelectModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    MatListModule
   ],
   providers: [
     CalendarService,
