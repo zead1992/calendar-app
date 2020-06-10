@@ -111,5 +111,5 @@
   </div>
 </div>
 <div mat-dialog-actions>
-  <button [disabled]="newForm.form.invalid" color="accent" mat-raised-button>Add Reminder</button>
+  <button (click)="addReminder()" [disabled]="newForm.form.invalid" color="accent" mat-raised-button>Add Reminder</button>
 </div>

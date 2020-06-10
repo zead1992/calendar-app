@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {IReminderNewForm} from "../../interfaces/reminder.form";
+import {IReminderNew, IReminderNewForm} from "../../interfaces/reminder.form";
 import {BaseForm} from "../../utilities/base-form";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {BehaviorSubject, ReplaySubject, Subject} from "rxjs";
@@ -10,6 +10,11 @@ import {WeatherService} from "../../services/weather.service";
 import {getMonth, getDate, parseISO} from "date-fns/esm";
 import {IOpenWeatherResponse} from "../../interfaces/weather.interface";
 import {MOCK_WEATHER_DATA} from "../../mocks/weather.mock";
+import {Store} from "@ngxs/store";
+import {AddReminder, OnNewReminderAdded} from "../../store/actions/calendar.actions";
+import {Color} from "@angular-material-components/color-picker";
+import {MatDialogRef} from "@angular/material/dialog";
+import {BaseUiService} from "../../services/base-ui.service";
 
 @Component({
   selector: 'app-new-reminder-form',
@@ -33,7 +38,10 @@ export class NewReminderFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private _fb: FormBuilder,
-    private _weatherService: WeatherService
+    private _weatherService: WeatherService,
+    private _store : Store,
+    private _matDialogRef : MatDialogRef<NewReminderFormComponent>,
+    private _baseUi:BaseUiService
   ) {
     this.destroySubject = new Subject<boolean>();
   }
@@ -114,7 +122,15 @@ export class NewReminderFormComponent implements OnInit, OnDestroy {
 
   //add reminder
   public addReminder() {
-
+    const formValues : IReminderNew = this.newForm.form.getRawValue();
+    this._store.dispatch(new AddReminder({...formValues}))
+      .pipe(
+        takeUntil(this.destroySubject)
+      )
+      .subscribe(()=>{
+        this._store.dispatch(new OnNewReminderAdded());
+        this._matDialogRef.close();
+      });
   }
 
 }

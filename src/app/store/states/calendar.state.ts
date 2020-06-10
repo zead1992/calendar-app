@@ -1,9 +1,12 @@
 //calendar state
 import {Utility} from "../../utilities/utility";
 import {Action, createSelector, Selector, State, StateContext} from "@ngxs/store";
-import {getMonth} from "date-fns/esm";
-import {AddReminder, NextMonth, PreviousMonth} from "../actions/calendar.actions";
+import {getMonth, getDate} from "date-fns/esm";
+import {AddReminder, NextMonth, OnNewReminderAdded, PreviousMonth} from "../actions/calendar.actions";
 import {Color} from "@angular-material-components/color-picker";
+import {parseISO} from "date-fns/esm"
+import {BaseUiService} from "../../services/base-ui.service";
+import {Injectable} from "@angular/core";
 
 export interface CalendarStateModel {
   calendar: {
@@ -67,7 +70,13 @@ export const initialCalendarState: CalendarStateModel = {
   name: 'calendar',
   defaults: initialCalendarState
 })
+@Injectable()
 export class CalendarState {
+
+  constructor(
+    private _baseUiService : BaseUiService
+  ) {
+  }
 
   //calendar state
   @Selector([CalendarState])
@@ -99,17 +108,17 @@ export class CalendarState {
 
       if (currentMonthIndex == 0) {
         prevMonthSlice = {
-          index:11,
-          name:Utility.monthStatic()["11"],
-          startDay:null,
-          day:[]
+          index: 11,
+          name: Utility.monthStatic()["11"],
+          startDay: null,
+          day: []
         };
 
-        for(let i = 0 ; i< currentMonthState.startDay; i++){
+        for (let i = 0; i < currentMonthState.startDay; i++) {
           prevMonthSlice.day.push({
-            date:null,
-            isWeekend:false,
-            reminders:[]
+            date: null,
+            isWeekend: false,
+            reminders: []
           })
         }
 
@@ -160,8 +169,24 @@ export class CalendarState {
   }
 
   @Action(AddReminder)
-  addReminder({getState,patchState}:StateContext<CalendarStateModel>){
+  addReminder({getState, patchState,setState}: StateContext<CalendarStateModel>, {payload}: AddReminder) {
+    const parseDate = parseISO(payload.date);
+    const reminderMonth = getMonth(parseDate);
+    const reminderDate = getDate(parseDate);
+    const monthState: MonthState = getState().calendar[reminderMonth];
+    monthState.day[reminderDate - 1].reminders.push({...payload});
+    patchState({
+      calendar: {
+        ...getState().calendar,
+        [String(reminderMonth)]: monthState
+      }
+    });
 
+  }
+
+  @Action(OnNewReminderAdded)
+  onNewReminderAdded(){
+    this._baseUiService.showSnackBar({msg:'new reminder Added'});
   }
 
 }

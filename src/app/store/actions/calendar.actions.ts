@@ -1,6 +1,15 @@
+import {IReminderNew, IReminderNewForm} from "../../interfaces/reminder.form";
+
 export class AddReminder {
   static readonly type = '[Reminder API] add new reminder';
 
+  constructor(public payload :IReminderNew) {
+  }
+}
+
+//on new reminder added
+export class OnNewReminderAdded {
+  static readonly type ='[Reminder Added] on success';
   constructor() {
   }
 }

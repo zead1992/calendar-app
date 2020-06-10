@@ -30,6 +30,8 @@ import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import {WeatherService} from "./services/weather.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatListModule} from "@angular/material/list";
+import {BaseUiService} from "./services/base-ui.service";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -44,7 +46,7 @@ import {MatListModule} from "@angular/material/list";
     FormsModule,
     ReactiveFormsModule,
     NgxsModule.forRoot([CalendarState], {
-      developmentMode: !environment.production
+      developmentMode: false
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
@@ -59,14 +61,17 @@ import {MatListModule} from "@angular/material/list";
     NgxMatColorPickerModule,
     MatSelectModule,
     NgxMatSelectSearchModule,
-    MatListModule
+    MatListModule,
+    MatSnackBarModule
   ],
   providers: [
     CalendarService,
     WeatherService,
-    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
+    BaseUiService,
+    {provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS}
   ],
-  entryComponents:[NewReminderFormComponent],
+  entryComponents: [NewReminderFormComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
