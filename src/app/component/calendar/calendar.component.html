@@ -49,7 +49,10 @@
     <!--current month-->
     <ng-container *ngIf="currentMonthState$ | async as currentMonthState">
       <ng-container *ngFor="let day of currentMonthState.day">
-        <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}" class="calendar-card">
+        <div [ngClass]="{'weekend-card': day.isWeekend,'has-reminder':day.reminders.length > 0}"
+             class="calendar-card"
+        (click)="openRemindersDialog(day)"
+        >
           <div class="card-wrapper">
             <span class="date">{{day.date}}</span>
             <span matTooltip="Reminder" *ngIf="day.reminders.length > 0" class="reminder-count">{{day.reminders.length}}</span>

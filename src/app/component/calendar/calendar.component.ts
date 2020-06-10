@@ -1,14 +1,15 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngxs/store";
 import {Observable, Subject} from "rxjs";
-import {CalendarState, CalendarStateModel, MonthState} from "../../store/states/calendar.state";
+import {CalendarState, CalendarStateModel, DayState, MonthState} from "../../store/states/calendar.state";
 import {getMonth} from "date-fns/esm";
 import {takeUntil} from "rxjs/operators";
-import {NextMonth, PreviousMonth} from "../../store/actions/calendar.actions";
+import {NextMonth, PreviousMonth, SetSelectedDayState} from "../../store/actions/calendar.actions";
 import {MatDialog} from "@angular/material/dialog";
 import {NewReminderFormComponent} from "../new-reminder-form/new-reminder-form.component";
 import orderBy from "lodash-es/orderBy";
 import {IReminderNew} from "../../interfaces/reminder.form";
+import {RemindersDialogComponent} from "../reminders-dialog/reminders-dialog.component";
 
 @Component({
   selector: 'app-calendar',
@@ -66,6 +67,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
   //open reminder form dialog
   public openReminderFormDialog(){
     const dialog = this._matDialog.open(NewReminderFormComponent);
+  }
+
+  public openRemindersDialog(dayState : DayState){
+    if(dayState.reminders.length > 0){
+      this._store.dispatch(new SetSelectedDayState(dayState));
+      const dialog = this._matDialog.open(RemindersDialogComponent,{
+        width:'600px'
+      });
+    }
   }
 
   public orderReminderByDate(reminders)  : IReminderNew[]{

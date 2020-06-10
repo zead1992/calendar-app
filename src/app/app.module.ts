@@ -34,12 +34,15 @@ import {BaseUiService} from "./services/base-ui.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { RemindersDialogComponent } from './component/reminders-dialog/reminders-dialog.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
     AppComponent,
     CalendarComponent,
-    NewReminderFormComponent
+    NewReminderFormComponent,
+    RemindersDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     NgxMatSelectSearchModule,
     MatListModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatExpansionModule
   ],
   providers: [
     CalendarService,
@@ -76,7 +80,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     BaseUiService,
     {provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS}
   ],
-  entryComponents: [NewReminderFormComponent],
+  entryComponents: [NewReminderFormComponent,RemindersDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

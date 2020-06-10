@@ -1,4 +1,4 @@
-import {getDaysInMonth, getYear, startOfMonth, getDay,isWeekend} from "date-fns/esm";
+import {getDaysInMonth, getYear, startOfMonth, getDay,isWeekend,parse} from "date-fns/esm";
 import {DayState, MonthState} from "../store/states/calendar.state";
 
 export class Utility {
@@ -25,11 +25,13 @@ export class Utility {
 
     const daysCount = getDaysInMonth(new Date(getYear(new Date().getUTCFullYear()), index));
     const monthDays: DayState[] = [];
+    const currentYear = getYear(new Date());
     for (let i = 1; i <= daysCount; i++) {
       monthDays.push({
         date: i,
         reminders: [],
-        isWeekend:isWeekend(new Date(new Date().getUTCFullYear(),index,i))
+        isWeekend:isWeekend(new Date(new Date().getUTCFullYear(),index,i)),
+        fullDate:new Date(currentYear,index,i)
       });
     }
 

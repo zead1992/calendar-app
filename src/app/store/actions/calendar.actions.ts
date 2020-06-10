@@ -1,4 +1,5 @@
 import {IReminderNew, IReminderNewForm} from "../../interfaces/reminder.form";
+import {DayState} from "../states/calendar.state";
 
 export class AddReminder {
   static readonly type = '[Reminder API] add new reminder';
@@ -49,6 +50,12 @@ export class PreviousMonth {
   static readonly type = '[Calendar Nav] previous month';
 
   constructor() {
+  }
+}
+
+export class SetSelectedDayState {
+  static readonly type = '[Calendar State] set day state';
+  constructor(public payload : DayState) {
   }
 }
 

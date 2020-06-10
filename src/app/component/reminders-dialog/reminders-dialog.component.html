@@ -1,0 +1,30 @@
+<ng-container *ngIf="dayState$ | async as dayState">
+  <h1 mat-dialog-title>{{dayState.fullDate | date}}</h1>
+  <div mat-dialog-content>
+    <mat-accordion >
+      <ng-container *ngFor="let reminder of orderReminderByDate(dayState.reminders)">
+        <mat-expansion-panel (closed)="panelClosed = true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{reminder.date | date:'yyyy/MM/dd , HH:mm'}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-list>
+            <mat-list-item>
+              <span>Text: {{reminder.text}}</span>
+            </mat-list-item>
+            <mat-list-item>
+              <span>City: {{getCityName(reminder.city)}}</span>
+            </mat-list-item>
+            <mat-list-item>
+              <span class="color-wrapper">Color: <span class="color-span" [ngStyle]="{'background-color':'#'+reminder.color.hex}"></span></span>
+            </mat-list-item>
+          </mat-list>
+
+        </mat-expansion-panel>
+      </ng-container>
+    </mat-accordion>
+  </div>
+</ng-container>
+

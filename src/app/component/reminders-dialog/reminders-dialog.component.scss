@@ -1,0 +1,18 @@
+mat-expansion-panel{
+  margin-bottom: 1rem;
+}
+
+.color-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .color-span{
+    background-color: rgb(177, 221, 30);
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-left: 10px;
+  }
+}
+
