@@ -32,6 +32,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatListModule} from "@angular/material/list";
 import {BaseUiService} from "./services/base-ui.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
 
 @NgModule({
   declarations: [
@@ -48,8 +49,11 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     NgxsModule.forRoot([CalendarState], {
       developmentMode: false
     }),
+    NgxsStoragePluginModule.forRoot({
+      key: CalendarState
+    }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot(),
+    // NgxsLoggerPluginModule.forRoot(),
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
