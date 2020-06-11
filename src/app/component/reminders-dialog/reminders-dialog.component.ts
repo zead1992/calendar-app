@@ -7,7 +7,7 @@ import orderBy from "lodash-es/orderBy";
 import {CITY_LIST} from "../../static/city.list";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {EditReminderFormComponent} from "../edit-reminder-form/edit-reminder-form.component";
-import {SetSelectedReminder} from "../../store/actions/calendar.actions";
+import {RemoveAllReminder, RemoveReminder, SetSelectedReminder} from "../../store/actions/calendar.actions";
 
 @Component({
   selector: 'app-reminders-dialog',
@@ -48,6 +48,14 @@ export class RemindersDialogComponent implements OnInit {
     this._matDialogRef.close();
     this._store.dispatch(new SetSelectedReminder(reminder));
     this._matDialog.open(EditReminderFormComponent);
+  }
+
+  public removeReminder(reminder : IReminderNew){
+    this._store.dispatch(new RemoveReminder(reminder))
+  }
+
+  public removeAllReminder(reminders : IReminderNew[]){
+    this._store.dispatch(new RemoveAllReminder(reminders))
   }
 
 }

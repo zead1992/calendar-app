@@ -24,12 +24,18 @@
               <button (click)="openEditDialog(reminder)" mat-raised-button color="primary">
                 Edit
               </button>
+              <button class="ml-3" (click)="removeReminder(reminder)" mat-raised-button color="warn">
+                Delete
+              </button>
             </mat-list-item>
           </mat-list>
 
         </mat-expansion-panel>
       </ng-container>
     </mat-accordion>
+    <button *ngIf="dayState.reminders.length > 0" class="ml-3" (click)="removeAllReminder(dayState.reminders)" mat-raised-button color="warn">
+      Remove All
+    </button>
   </div>
 </ng-container>
 

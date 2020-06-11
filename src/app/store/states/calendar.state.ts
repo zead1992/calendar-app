@@ -6,7 +6,7 @@ import {
   AddReminder, EditReminder,
   NextMonth, OnEditReminder,
   OnNewReminderAdded,
-  PreviousMonth,
+  PreviousMonth, RemoveAllReminder, RemoveReminder,
   SetSelectedDayState, SetSelectedReminder
 } from "../actions/calendar.actions";
 import {Color} from "@angular-material-components/color-picker";
@@ -229,6 +229,48 @@ export class CalendarState {
     });
     dispatch(new OnEditReminder());
 
+  }
+
+  @Action(RemoveReminder)
+  removeReminder({getState,patchState}:StateContext<CalendarStateModel>,{payload}:RemoveReminder){
+    const parseDate = parseISO(payload.date);
+    const reminderMonth = getMonth(parseDate);
+    const reminderDate = getDate(parseDate);
+    const monthState: MonthState = getState().calendar[reminderMonth];
+    const reminder = monthState.day[reminderDate - 1].reminders.find(val=>val.id == payload.id);
+    const reminderIndex = monthState.day[reminderDate - 1].reminders.indexOf(reminder);
+    monthState.day[reminderDate - 1].reminders.splice(reminderIndex,1);
+    patchState({
+      calendar: {
+        ...getState().calendar,
+        [String(reminderMonth)]: monthState
+      }
+    });
+  }
+
+  @Action(RemoveAllReminder)
+  removeAllReminder({getState,patchState}:StateContext<CalendarStateModel>,{payload}:RemoveAllReminder){
+    const parseDate = parseISO(payload[0].date);
+    const reminderMonth = getMonth(parseDate);
+    const reminderDate = getDate(parseDate);
+    const monthState: MonthState = getState().calendar[reminderMonth];
+
+    const indexes : number[] = [];
+    payload.forEach((_reminder)=>{
+      let reminder = monthState.day[reminderDate - 1].reminders.find(val=>val.id == _reminder.id);
+      let reminderIndex = monthState.day[reminderDate - 1].reminders.indexOf(reminder);
+      indexes.push(reminderIndex);
+    });
+    monthState.day[reminderDate - 1].reminders = monthState.day[reminderDate - 1]
+      .reminders
+      .filter((val,index) => indexes.indexOf(index) == -1);
+
+    patchState({
+      calendar: {
+        ...getState().calendar,
+        [String(reminderMonth)]: monthState
+      }
+    });
   }
 
   @Action(OnNewReminderAdded)

@@ -35,14 +35,14 @@ export class OnEditReminder {
 export class RemoveReminder {
   static readonly type = '[Reminder API] remove reminder';
 
-  constructor() {
+  constructor(public payload : IReminderNew) {
   }
 }
 
 export class RemoveAllReminder {
   static readonly type = '[Reminder API] remove all reminders';
 
-  constructor() {
+  constructor(public payload : IReminderNew[]) {
   }
 }
 
