@@ -9,8 +9,6 @@ import {
   PreviousMonth, RemoveAllReminder, RemoveReminder,
   SetSelectedDayState, SetSelectedReminder
 } from "../actions/calendar.actions";
-import {Color} from "@angular-material-components/color-picker";
-import {parseISO} from "date-fns/esm"
 import {BaseUiService} from "../../services/base-ui.service";
 import {Injectable} from "@angular/core";
 import {IColor, IReminderNew} from "../../interfaces/reminder.form";
@@ -196,7 +194,8 @@ export class CalendarState {
 
   @Action(AddReminder)
   addReminder({getState, patchState, setState, dispatch}: StateContext<CalendarStateModel>, {payload}: AddReminder) {
-    const parseDate = parseISO(payload.date);
+    const parseDate = payload.date;
+    console.log(parseDate);
     const reminderMonth = getMonth(parseDate);
     const reminderDate = getDate(parseDate);
     const monthState: MonthState = getState().calendar[reminderMonth];
@@ -214,7 +213,7 @@ export class CalendarState {
   //edit reminder
   @Action(EditReminder)
   editReminder({getState, patchState, setState, dispatch}: StateContext<CalendarStateModel>, {payload}: EditReminder) {
-    const parseDate = parseISO(payload.date);
+    const parseDate = payload.date;
     const reminderMonth = getMonth(parseDate);
     const reminderDate = getDate(parseDate);
     const monthState: MonthState = getState().calendar[reminderMonth];
@@ -233,7 +232,7 @@ export class CalendarState {
 
   @Action(RemoveReminder)
   removeReminder({getState,patchState}:StateContext<CalendarStateModel>,{payload}:RemoveReminder){
-    const parseDate = parseISO(payload.date);
+    const parseDate = payload.date;
     const reminderMonth = getMonth(parseDate);
     const reminderDate = getDate(parseDate);
     const monthState: MonthState = getState().calendar[reminderMonth];
@@ -250,7 +249,7 @@ export class CalendarState {
 
   @Action(RemoveAllReminder)
   removeAllReminder({getState,patchState}:StateContext<CalendarStateModel>,{payload}:RemoveAllReminder){
-    const parseDate = parseISO(payload[0].date);
+    const parseDate = payload[0].date;
     const reminderMonth = getMonth(parseDate);
     const reminderDate = getDate(parseDate);
     const monthState: MonthState = getState().calendar[reminderMonth];

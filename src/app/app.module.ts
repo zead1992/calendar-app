@@ -37,6 +37,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { RemindersDialogComponent } from './component/reminders-dialog/reminders-dialog.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import { EditReminderFormComponent } from './component/edit-reminder-form/edit-reminder-form.component';
+import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from "@angular-material-components/datetime-picker";
 
 @NgModule({
   declarations: [
@@ -75,7 +76,9 @@ import { EditReminderFormComponent } from './component/edit-reminder-form/edit-r
     MatListModule,
     MatSnackBarModule,
     MatTooltipModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule
   ],
   providers: [
     CalendarService,
