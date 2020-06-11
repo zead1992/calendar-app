@@ -55,9 +55,10 @@ import { EditReminderFormComponent } from './component/edit-reminder-form/edit-r
     NgxsModule.forRoot([CalendarState], {
       developmentMode: false
     }),
-    NgxsStoragePluginModule.forRoot({
-      key: CalendarState
-    }),
+    //ngxs storage plugin enable to keep the state sync with localstorage
+    // NgxsStoragePluginModule.forRoot({
+    //   key: CalendarState
+    // }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     MatIconModule,
