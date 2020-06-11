@@ -20,7 +20,7 @@ export class OnNewReminderAdded {
 export class EditReminder {
   static readonly type = '[Reminder API] edit reminder';
 
-  constructor(public payload: IReminderNew) {
+  constructor(public payload: IReminderNew,public currentReminder : IReminderNew) {
   }
 }
 

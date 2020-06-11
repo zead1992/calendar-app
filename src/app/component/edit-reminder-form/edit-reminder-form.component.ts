@@ -134,9 +134,9 @@ export class EditReminderFormComponent implements OnInit, OnDestroy {
       })
   }
 
-  public editReminder() {
+  public editReminder(_currentReminder : IReminderNew) {
     const formValues : IReminderNew = this.editForm.form.getRawValue();
-    this._store.dispatch(new EditReminder({...formValues}))
+    this._store.dispatch(new EditReminder({...formValues},_currentReminder))
       .pipe(
         takeUntil(this.destroySubject)
       )

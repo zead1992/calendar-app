@@ -195,7 +195,6 @@ export class CalendarState {
   @Action(AddReminder)
   addReminder({getState, patchState, setState, dispatch}: StateContext<CalendarStateModel>, {payload}: AddReminder) {
     const parseDate = payload.date;
-    console.log(parseDate);
     const reminderMonth = getMonth(parseDate);
     const reminderDate = getDate(parseDate);
     const monthState: MonthState = getState().calendar[reminderMonth];
@@ -212,20 +211,28 @@ export class CalendarState {
 
   //edit reminder
   @Action(EditReminder)
-  editReminder({getState, patchState, setState, dispatch}: StateContext<CalendarStateModel>, {payload}: EditReminder) {
+  editReminder({getState, patchState, setState, dispatch}: StateContext<CalendarStateModel>, {payload,currentReminder}: EditReminder) {
     const parseDate = payload.date;
     const reminderMonth = getMonth(parseDate);
     const reminderDate = getDate(parseDate);
     const monthState: MonthState = getState().calendar[reminderMonth];
+    const currentReminderDate = getDate(currentReminder.date);
     const reminder = monthState.day[reminderDate - 1].reminders.find(val=>val.id == payload.id);
     const reminderIndex = monthState.day[reminderDate - 1].reminders.indexOf(reminder);
-    monthState.day[reminderDate - 1].reminders[reminderIndex] = {...payload};
-    patchState({
-      calendar: {
-        ...getState().calendar,
-        [String(reminderMonth)]: monthState
-      }
-    });
+    //check if date changed
+    if(currentReminderDate !== reminderDate){
+      dispatch(new RemoveReminder(currentReminder));
+      dispatch(new AddReminder(payload));
+    }else{
+      monthState.day[reminderDate - 1].reminders[reminderIndex] = {...payload};
+      patchState({
+        calendar: {
+          ...getState().calendar,
+          [String(reminderMonth)]: monthState
+        }
+      });
+    }
+
     dispatch(new OnEditReminder());
 
   }
